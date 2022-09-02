@@ -53,7 +53,7 @@ def choose_random_topic():
 root = tk.Tk()
 root.title('Topic Bank')
 root.iconbitmap("PL_icon.ico")
-choice_colour = '#cfb7e5'
+choice_colour = '#5189a7'
 root['background']=choice_colour
 
 
