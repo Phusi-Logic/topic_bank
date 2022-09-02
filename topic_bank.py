@@ -2,29 +2,31 @@ import tkinter as tk
 from tkinter import *
 import random
 
-topic_bank_directory = 'C:/'
-topic_bank_filename = topic_bank_directory + "topic_bank.txt"
+
+topic_bank_filename = "topic_bank.txt"
+# Make the file if it doesn't exist
+# This will only work in the interpreter. A file named <topic_bank.txt> must be made in the same directory as the .exe file if the .py is compiled 
 
 
-def topic_bank_from_file(filename):
+def topic_bank_from_file(topic_bank_filename):
+    # Read the file
     topic_bank_file_openage = open(topic_bank_filename, 'r')
     topic_bank = topic_bank_file_openage.read().splitlines()
     print(topic_bank)
     topic_bank_file_openage.close()
-
     return topic_bank
+
 
 topic_list = topic_bank_from_file(topic_bank_filename)
 global randoms_list
 randoms_list = topic_list.copy()
 
+
 def write_topic_to_file(event=None):
     topic_string = str(topic_entry_var.get())
     topic_bank_file_openage = open(topic_bank_filename, 'a')
-
     topic_bank_file_openage.write(topic_string)
     topic_bank_file_openage.write('\n')
-
     topic_bank_file_openage.close()
     topic_entry_var.set("")
     root.update()
@@ -39,22 +41,23 @@ def reset():
 
 
 def choose_random_topic():
-    print(len(randoms_list))
-    topic_index = random.randint(0, len(randoms_list)-1)
-    print(topic_index)
-    print(randoms_list[topic_index])
-    random_topic_str.set(randoms_list[topic_index])
-    root.update()
-    randoms_list.remove(randoms_list[topic_index])
     if len(randoms_list) == 0:
         random_topic_str.set("Out of topics! Press the reset button to start again")
+    else:
+        print(len(randoms_list))
+        topic_index = random.randint(0, len(randoms_list)-1)
+        print(topic_index)
+        print(randoms_list[topic_index])
+        random_topic_str.set(randoms_list[topic_index])
+        root.update()
+        randoms_list.remove(randoms_list[topic_index])
+
 
 
 root = tk.Tk()
 root.title('Topic Bank')
-root.iconbitmap("PL_icon.ico")
 choice_colour = '#5189a7'
-root['background']=choice_colour
+root['background'] = choice_colour
 
 
 # Label 1
@@ -67,7 +70,6 @@ topic_entry_var = tk.StringVar()
 topic_entry_var.set("")
 topic_entry = tk.Entry(root, textvariable = topic_entry_var, width=60)
 topic_entry.grid(row=1, column=0, columnspan=2)
-# topic_entry.delete(0, "end")  # Clear the entry box
 
 # Button 1
 enter_topic_button = tk.Button(root, text='Enter topic', command=write_topic_to_file, width=30, height=1)
